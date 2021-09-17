@@ -30,6 +30,7 @@
     "array.prototype.flatmap": "^1.2.4",
     "classnames": "^2.3.1",
     "hot-formula-parser": "^4.0.0",
+    "jest-transform-css": "https://github.com/iddan/jest-transform-css",
     "unistore": "^3.5.2"
   },
   "devDependencies": {
@@ -85,12 +86,12 @@
     "testPathIgnorePatterns": [
       "dist"
     ],
-    "moduleNameMapper": {
-      "\\.css$": "<rootDir>/src/__mocks__/style-mock.ts"
-    },
     "setupFilesAfterEnv": [
       "<rootDir>/src/jest-setup.ts"
-    ]
+    ],
+    "transform": {
+      "^.+\\.css$": "jest-transform-css"
+    }
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
