@@ -112,6 +112,8 @@ export type Props<CellType extends Types.CellBase> = {
   onActivate?: (active: Point.Point) => void;
   /** Callback called when Spreadhseet data pasted */
   onPaste?: (selected: Point.Point[]) => void;
+  /** Callback called when Spreadhseet data cleared by backspace */
+  onClear?: (selected: Point.Point[]) => void;
   /** Callback called when the Spreadsheet loses focus */
   onBlur?: () => void;
   onCellCommit?: (
@@ -145,6 +147,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     getBindingsForCell = defaultGetBindingsForCell,
     RowIndicator = DefaultRowIndicator,
     ColumnIndicator = DefaultColumnIndicator,
+    onClear = () => {},
     onChange = () => {},
     onModeChange = () => {},
     onSelect = () => {},
@@ -238,6 +241,10 @@ const Spreadsheet = <CellType extends Types.CellBase>(
       onSelect(points);
     }
 
+    if (state.cleared !== prevState.cleared) {
+      onClear(state.cleared);
+    }
+
     if (state.pasted !== prevState.pasted) {
       const points = state.pasted
         ? Array.from(PointRange.iterate(state.pasted))
@@ -268,6 +275,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     onModeChange,
     onSelect,
     onPaste,
+    onClear,
     rowLabels,
     columnLabels,
   ]);

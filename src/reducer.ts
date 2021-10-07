@@ -27,6 +27,7 @@ export const INITIAL_STATE: Types.StoreState = {
   data: [],
   selected: null,
   pasted: null,
+  cleared: [],
   copied: PointMap.from([]),
   bindings: PointMap.from([]),
   lastCommit: null,
@@ -253,9 +254,14 @@ function clear(state: Types.StoreState): Types.StoreState | void {
   if (!state.active) {
     return;
   }
+
   const selectedPoints = state.selected
-    ? Array.from(PointRange.iterate(state.selected))
+    ? Array.from(PointRange.iterate(state.selected)).filter((point) => {
+        const cell = Matrix.get(point, state.data);
+        return !cell?.readOnly;
+      })
     : [];
+
   const changes = selectedPoints.map((point) => {
     const cell = Matrix.get(point, state.data);
     return {
@@ -264,12 +270,15 @@ function clear(state: Types.StoreState): Types.StoreState | void {
       nextCell: null,
     };
   });
+
+  const points = selectedPoints.reduce((acc, point) => {
+    return Matrix.set(point, undefined, acc);
+  }, state.data);
+
   return {
     ...state,
-    data: selectedPoints.reduce(
-      (acc, point) => Matrix.set(point, undefined, acc),
-      state.data
-    ),
+    data: points,
+    cleared: selectedPoints,
     ...commit(changes),
   };
 }
