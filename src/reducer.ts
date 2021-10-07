@@ -137,12 +137,19 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
     const { data, commit } = PointMap.reduce<Accumulator, Types.CellBase>(
       (acc, value, point) => {
         let commit = acc.commit || [];
+
         const nextPoint: Point.Point = {
           row: point.row - minPoint.row + active.row,
           column: point.column - minPoint.column + active.column,
         };
 
         const nextData = state.cut ? Matrix.unset(point, acc.data) : acc.data;
+        const isCellReadOnly =
+          acc.data[nextPoint.row][nextPoint.column]?.readOnly || false;
+
+        if (isCellReadOnly) {
+          return acc;
+        }
 
         if (state.cut) {
           commit = [...commit, { prevCell: value, nextCell: null }];
