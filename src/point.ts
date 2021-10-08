@@ -6,6 +6,10 @@ export type Point = {
   row: number;
 };
 
+export type ValuePoint<T = any> = Point & {
+  value: T;
+};
+
 /** Return whether two given points are the equal */
 export function isEqual(source: Point, target: Point): boolean {
   return source.column === target.column && source.row === target.row;

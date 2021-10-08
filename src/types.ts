@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Parser as FormulaParser } from "hot-formula-parser";
-import { Point } from "./point";
+import { Point, ValuePoint } from "./point";
 import { PointMap } from "./point-map";
 import { PointSet } from "./point-set";
 import { Matrix } from "./matrix";
@@ -47,7 +47,7 @@ export type Dimensions = {
 export type StoreState<Cell extends CellBase = CellBase> = {
   data: Matrix<Cell>;
   selected: PointRange | null;
-  pasted: PointRange | null;
+  pasted: ValuePoint[] | null;
   cleared: Point[];
   copied: PointMap<Cell>;
   hasPasted: boolean;

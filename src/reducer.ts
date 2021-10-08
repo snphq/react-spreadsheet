@@ -134,6 +134,8 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       : paddedRowsCount;
     const paddedData = Matrix.padRows(state.data, requiredRowsCount);
 
+    const result: Point.ValuePoint[] = [];
+
     const { data, commit } = PointMap.reduce<Accumulator, Types.CellBase>(
       (acc, value, point) => {
         let commit = acc.commit || [];
@@ -158,7 +160,7 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
         if (!Matrix.has(nextPoint, paddedData)) {
           return { data: nextData, commit };
         }
-
+        result.push({ row: nextPoint.row, column: nextPoint.column, value });
         const currentValue = Matrix.get(nextPoint, nextData) || null;
 
         commit = [
@@ -187,7 +189,7 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       ...state,
       data,
       selected: selectedRange,
-      pasted: selectedRange,
+      pasted: result,
       cut: false,
       hasPasted: true,
       mode: "view",

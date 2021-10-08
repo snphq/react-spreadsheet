@@ -111,7 +111,7 @@ export type Props<CellType extends Types.CellBase> = {
   /** Callback called when Spreadsheet's active cell changes. */
   onActivate?: (active: Point.Point) => void;
   /** Callback called when Spreadhseet data pasted */
-  onPaste?: (selected: Point.Point[]) => void;
+  onPaste?: (pasted: Point.ValuePoint[] | null) => void;
   /** Callback called when Spreadhseet data cleared by backspace */
   onClear?: (selected: Point.Point[]) => void;
   /** Callback called when the Spreadsheet loses focus */
@@ -246,10 +246,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     }
 
     if (state.pasted !== prevState.pasted) {
-      const points = state.pasted
-        ? Array.from(PointRange.iterate(state.pasted))
-        : [];
-      onPaste(points);
+      onPaste(state.pasted);
     }
 
     if (state.active !== prevState.active) {
