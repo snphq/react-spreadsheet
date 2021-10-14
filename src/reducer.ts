@@ -146,8 +146,7 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
         };
 
         const nextData = state.cut ? Matrix.unset(point, acc.data) : acc.data;
-        const isCellReadOnly =
-          acc.data[nextPoint.row][nextPoint.column]?.readOnly || false;
+        const isCellReadOnly = Matrix.get(nextPoint, acc.data)?.readOnly;
 
         if (isCellReadOnly) {
           return acc;
@@ -160,7 +159,9 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
         if (!Matrix.has(nextPoint, paddedData)) {
           return { data: nextData, commit };
         }
+
         result.push({ row: nextPoint.row, column: nextPoint.column, value });
+
         const currentValue = Matrix.get(nextPoint, nextData) || null;
 
         commit = [
