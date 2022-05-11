@@ -249,7 +249,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     }
 
     if (state.pasted !== prevState.pasted) {
-      onPaste(state.pasted, state.selected);
+      onPaste(state.pasted, state.selectedToPastePoints);
     }
 
     if (state.active !== prevState.active) {
