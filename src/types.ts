@@ -48,7 +48,7 @@ export type StoreState<Cell extends CellBase = CellBase> = {
   data: Matrix<Cell>;
   selected: PointRange | null;
   pasted: ValuePoint[] | null;
-  selectedToPastePoints: PointRange | null;
+  selectedToPastePoints: Point[];
   cleared: Point[];
   copied: PointMap<Cell>;
   hasPasted: boolean;

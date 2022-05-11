@@ -31,7 +31,7 @@ export const INITIAL_STATE: Types.StoreState = {
   copied: PointMap.from([]),
   bindings: PointMap.from([]),
   lastCommit: null,
-  selectedToPastePoints: null,
+  selectedToPastePoints: [],
 };
 
 const reducer = createReducer(INITIAL_STATE, (builder) => {
@@ -187,14 +187,16 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       column: active.column + copiedSize.columns - 1,
     });
 
+    const selectedPoints = state.selected
+      ? Array.from(PointRange.iterate(state.selected))
+      : [];
+
     return {
       ...state,
       data,
       selected: selectedRange,
       pasted: result,
-      selectedToPastePoints: state.selected
-        ? PointRange.create(state.selected.start, state.selected.end)
-        : null,
+      selectedToPastePoints: selectedPoints,
       cut: false,
       hasPasted: true,
       mode: "view",

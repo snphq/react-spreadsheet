@@ -113,7 +113,7 @@ export type Props<CellType extends Types.CellBase> = {
   /** Callback called when Spreadhseet data pasted */
   onPaste?: (
     pasted: Point.ValuePoint[] | null,
-    selected: PointRange.PointRange | null
+    selected: Point.Point[]
   ) => void;
   /** Callback called when Spreadhseet data cleared by backspace */
   onClear?: (selected: Point.Point[]) => void;
