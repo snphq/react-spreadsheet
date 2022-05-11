@@ -1,8 +1,8 @@
 {
-  "name": "@phen0menon/react-spreadsheet",
+  "name": "@snphq/react-spreadsheet",
   "version": "0.6.4",
   "description": "Simple, customizable yet performant spreadsheet for React",
-  "author": "phen0menon. The original author is Iddan Aaronsohn <mail@aniddan.com>",
+  "author": "snphq. The original author is Iddan Aaronsohn <mail@aniddan.com>",
   "keywords": [
     "spreadsheet",
     "excel",
