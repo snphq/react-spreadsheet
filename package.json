@@ -14,7 +14,7 @@
   "module": "dist/es/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "cross-env NODE_ENV=production yarn build",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "lint-typescript": "eslint .",
     "lint-css": "stylelint '*/**.css'",
     "lint": "run-s lint-typescript lint-css",
