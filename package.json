@@ -140,7 +140,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phen0menon/react-spreadsheet.git"
+    "url": "git+https://github.com/snphq/react-spreadsheet.git"
   },
   "license": "MIT",
   "bugs": {
