@@ -1,6 +1,6 @@
 {
   "name": "@blessmesanta/react-spreadsheet",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Simple, customizable yet performant spreadsheet for React",
   "author": "snphq. The original author is Iddan Aaronsohn <mail@aniddan.com>",
   "keywords": [
