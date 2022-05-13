@@ -3,6 +3,7 @@
 import typescript from "rollup-plugin-typescript2";
 import postcss from "rollup-plugin-postcss";
 import dts from "rollup-plugin-dts";
+import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 
 function createExternal(dependencies) {
@@ -27,7 +28,7 @@ export default [
       exports: "named",
       sourcemap: true,
     },
-    plugins: [typescript(), postcss()],
+    plugins: [typescript(), postcss(), terser()],
     external,
   },
   {
@@ -38,7 +39,7 @@ export default [
       exports: "named",
       sourcemap: true,
     },
-    plugins: [typescript(), postcss()],
+    plugins: [typescript(), postcss(), terser()],
     external,
   },
   {
