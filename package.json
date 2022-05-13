@@ -1,5 +1,5 @@
 {
-  "name": "@snphq/react-spreadsheet",
+  "name": "@blessmesanta/react-spreadsheet",
   "version": "0.6.4",
   "description": "Simple, customizable yet performant spreadsheet for React",
   "author": "snphq. The original author is Iddan Aaronsohn <mail@aniddan.com>",
@@ -14,7 +14,6 @@
   "module": "dist/es/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "cross-env NODE_ENV=production npm run build",
     "lint-typescript": "eslint .",
     "lint-css": "stylelint '*/**.css'",
     "lint": "run-s lint-typescript lint-css",
