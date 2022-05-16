@@ -2,9 +2,11 @@
 
 import typescript from "rollup-plugin-typescript2";
 import postcss from "rollup-plugin-postcss";
-import commonjs from "@rollup/plugin-commonjs";
 import dts from "rollup-plugin-dts";
+import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+// import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import pkg from "./package.json";
 
 function createExternal(dependencies) {
@@ -13,10 +15,18 @@ function createExternal(dependencies) {
   );
 }
 
+function filterDependencies(dependencies, filterList) {
+  return Object.keys(dependencies)
+    .filter((key) => !filterList.includes(key))
+    .reduce((acc, key) => ({ ...acc, [key]: dependencies[key] }), {});
+}
+
 const input = "src/index.ts";
 
 const external = [
-  ...createExternal(pkg.dependencies),
+  ...createExternal(
+    filterDependencies(pkg.dependencies, ["hot-formula-parser"])
+  ),
   ...createExternal(pkg.peerDependencies),
 ];
 
@@ -29,7 +39,7 @@ export default [
       exports: "named",
       sourcemap: true,
     },
-    plugins: [typescript(), commonjs(), postcss(), terser()],
+    plugins: [typescript(), nodeResolve(), commonjs(), postcss(), terser()],
     external,
   },
   {
@@ -40,7 +50,7 @@ export default [
       exports: "named",
       sourcemap: true,
     },
-    plugins: [typescript(), postcss(), terser()],
+    plugins: [typescript(), nodeResolve(), commonjs(), postcss(), terser()],
     external,
   },
   {
