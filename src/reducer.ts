@@ -7,6 +7,7 @@ import * as Point from "./point";
 import { isActive, normalizeSelected } from "./util";
 import { createReducer } from "@reduxjs/toolkit";
 import * as Actions from "./actions";
+import { current } from "immer";
 
 enum Direction {
   Left = "Left",
@@ -32,6 +33,7 @@ export const INITIAL_STATE: Types.StoreState = {
   bindings: PointMap.from([]),
   lastCommit: null,
   selectedToPastePoints: [],
+  copiedPoints: null,
 };
 
 const reducer = createReducer(INITIAL_STATE, (builder) => {
@@ -118,6 +120,7 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
     if (!active) {
       return;
     }
+
     const copiedMatrix = Matrix.split(text, (value) => ({ value }));
     const copied = PointMap.fromMatrix<any>(copiedMatrix);
 
@@ -182,6 +185,14 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       { data: paddedData, commit: [] }
     );
 
+    const copiedPoints = PointMap.reduce<Point.ValuePoint[], Types.CellBase>(
+      (acc, value, point) => {
+        return [...acc, { ...point, value }];
+      },
+      state.copied,
+      []
+    );
+
     const selectedRange = PointRange.create(active, {
       row: autoPadRowsOnPaste ? paddedRowsCount - 1 : requiredRowsCount - 1,
       column: active.column + copiedSize.columns - 1,
@@ -201,6 +212,7 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       hasPasted: true,
       mode: "view",
       lastCommit: commit,
+      copiedPoints,
     };
   });
   builder.addCase(Actions.edit, edit);

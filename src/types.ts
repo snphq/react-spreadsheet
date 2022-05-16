@@ -64,6 +64,7 @@ export type StoreState<Cell extends CellBase = CellBase> = {
   lastChanged: Point | null;
   bindings: PointMap<PointSet>;
   lastCommit: null | CellChange<Cell>[];
+  copiedPoints: ValuePoint[] | null;
 };
 
 /** Function for getting the cells the cell's value is bound to */
